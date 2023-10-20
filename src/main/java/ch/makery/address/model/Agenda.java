@@ -6,13 +6,19 @@ import java.util.ArrayList;
 
 public class Agenda {
     PersonRepositoryImpl impl;
-    private ArrayList<PersonVO> personas;
+    ArrayList<PersonVO> lista;
+
     public Agenda(){
 
     }
 
-    private ArrayList<PersonVO> listaPersonas() throws ExcepcionPerson {
-   personas = impl.obtenerListaPersonas();
-   return personas;
+    public ArrayList<PersonVO> listarPersonas() throws ExcepcionPerson {
+        return impl.obtenerListaPersonas();
+    }
+
+
+
+    public void setImpl(PersonRepositoryImpl impl) {
+        this.impl = impl;
     }
 }

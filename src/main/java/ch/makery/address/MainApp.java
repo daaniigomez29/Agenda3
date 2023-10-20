@@ -5,7 +5,10 @@ import ch.makery.address.controller.PersonEditDialogController;
 import ch.makery.address.controller.PersonOverviewController;
 import ch.makery.address.controller.RootLayoutController;
 import ch.makery.address.model.Agenda;
+import ch.makery.address.model.ExcepcionPerson;
 import ch.makery.address.model.Person;
+import ch.makery.address.model.PersonVO;
+import ch.makery.address.model.repository.impl.PersonRepositoryImpl;
 import ch.makery.address.util.ConversonPerson;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,18 +22,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-
-    Agenda agenda = new Agenda();
-    ConversonPerson p;
+   private Agenda agenda = new Agenda();
+    private PersonRepositoryImpl impl = new PersonRepositoryImpl();
+    ConversonPerson p = new ConversonPerson();
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
-    public MainApp() {
-        // Add some sample data
+    public MainApp() throws ExcepcionPerson {
+        agenda.setImpl(impl);
+        ArrayList<PersonVO> listaPersonVO = new ArrayList<PersonVO>();
+        ArrayList<Person>listaPerson = new ArrayList<Person>();
+      listaPersonVO = agenda.listarPersonas();
+      listaPerson = p.convertirLista(listaPersonVO);
+      personData.addAll(listaPerson);
 
     }
 
