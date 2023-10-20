@@ -4,7 +4,9 @@ import ch.makery.address.controller.BirthdayStatisticsController;
 import ch.makery.address.controller.PersonEditDialogController;
 import ch.makery.address.controller.PersonOverviewController;
 import ch.makery.address.controller.RootLayoutController;
+import ch.makery.address.model.Agenda;
 import ch.makery.address.model.Person;
+import ch.makery.address.util.ConversonPerson;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,19 +25,13 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    Agenda agenda = new Agenda();
+    ConversonPerson p;
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     public MainApp() {
         // Add some sample data
-        personData.add(new Person("Hans", "Muster"));
-        personData.add(new Person("Ruth", "Mueller"));
-        personData.add(new Person("Heinz", "Kurz"));
-        personData.add(new Person("Cornelia", "Meier"));
-        personData.add(new Person("Werner", "Meyer"));
-        personData.add(new Person("Lydia", "Kunz"));
-        personData.add(new Person("Anna", "Best"));
-        personData.add(new Person("Stefan", "Meier"));
-        personData.add(new Person("Martin", "Mueller"));
+
     }
 
     public ObservableList<Person> getPersonData() {

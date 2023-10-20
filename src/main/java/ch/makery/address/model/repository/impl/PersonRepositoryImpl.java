@@ -80,7 +80,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             String sql = String.format("UPDATE Personas SET firstName = '%s', lastName = '%s', street = '%s', postalCode = '%s', city = '%s', birthday = '%s' WHERE idPerson = %d", personVO.getFirstName(), personVO.getLastName(), personVO.getStreet(), personVO.getPostalCode(), personVO.getCity(), personVO.getBirthday(), cod);
             this.stmt.executeUpdate(sql);
         } catch (Exception var4) {
-            throw new ExcepcionPerson("No se ha podido relaizar la edición");
+            throw new ExcepcionPerson("No se ha podido realizar la edición");
         }
     }
     public int lastId() throws ExcepcionPerson {

@@ -27,7 +27,6 @@ public class HelloApplication extends Application {
 
             PersonRepositoryImpl im = new PersonRepositoryImpl();
 
-
             im.editPerson(p1, 2);
         } catch (ExcepcionPerson e){
             e.imprimirMensaje();
