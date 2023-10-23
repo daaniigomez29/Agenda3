@@ -4,6 +4,8 @@ import ch.makery.address.model.ExcepcionPerson;
 import ch.makery.address.model.PersonVO;
 import ch.makery.address.model.repository.PersonRepository;
 import ch.makery.address.util.DateUtil;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -44,6 +46,7 @@ public class PersonRepositoryImpl implements PersonRepository {
             }
 
             this.conexion.desconectarBD(conn);
+
             return this.personas;
         } catch (SQLException var6) {
             throw new ExcepcionPerson("No se ha podido realizar la operación");

@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,16 +35,28 @@ public class MainApp extends Application {
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
     public MainApp() throws ExcepcionPerson {
-        agenda.setImpl(impl);
-        ArrayList<PersonVO> listaPersonVO = new ArrayList<PersonVO>();
-        ArrayList<Person>listaPerson = new ArrayList<Person>();
-      listaPersonVO = agenda.listarPersonas();
-      listaPerson = p.convertirLista(listaPersonVO);
-      personData.addAll(listaPerson);
 
     }
 
+    public ArrayList<Person> addList(){
+        agenda.setImpl(impl);
+        ArrayList<PersonVO>listaPersonVO = new ArrayList<>();
+        ArrayList<Person>listaPerson = new ArrayList<>();
+        try{
+            listaPersonVO = agenda.listarPersonas();
+        } catch (ExcepcionPerson e){
+          Alert alert = new Alert(Alert.AlertType.INFORMATION);
+          alert.setHeaderText("Error");
+          alert.setTitle("Error");
+          alert.setContentText("Error al listar las personas.");
+          alert.showAndWait();
+        }
+        listaPerson = p.convertirLista(listaPersonVO);
+        return listaPerson;
+    }
+
     public ObservableList<Person> getPersonData() {
+        personData.addAll(addList());
         return personData;
     }
 
