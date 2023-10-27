@@ -40,7 +40,7 @@ public class PersonRepositoryImpl implements PersonRepository {
                 String city = rs.getString("city");
                 LocalDate birthday = rs.getDate("birthday").toLocalDate();
                 Integer codigo = rs.getInt("idPerson");
-                this.persona = new PersonVO(firstName, lastName, street, postalCode, city, birthday);
+                this.persona = new PersonVO(codigo,firstName, lastName, street, postalCode, city, birthday);
                 this.persona.setCod(codigo);
                 this.personas.add(this.persona);
             }
@@ -93,12 +93,22 @@ public class PersonRepositoryImpl implements PersonRepository {
             Connection conn = this.conexion.conectarBD();
             Statement comando = conn.createStatement();
 
-            for(ResultSet registro = comando.executeQuery("SELECT idPerson FROM Personas ORDER BY idPerson DESC LIMIT 1"); registro.next(); lastPersonId = registro.getInt("idPerson")) {
+            ResultSet resultSet =comando.executeQuery("SELECT AUTO_INCREMENT "+
+                    "FROM information_schema.TABLES "+
+                    "WHERE TABLE_SCHEMA = 'Prueba' "+
+                    "AND TABLE_NAME = 'Personas'");
+
+            {
+                if(resultSet.next()){
+                    lastPersonId=resultSet.getInt("AUTO_INCREMENT")-1;
+                }
+                System.out.println(lastPersonId);
+                return lastPersonId;
             }
 
-            return lastPersonId;
-        } catch (SQLException var5) {
-            throw new ExcepcionPerson("No se ha podido realizar la busqueda del ID");
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new ExcepcionPerson("No se ha podido realizar la búsqueda del ID");
         }
     }
 }

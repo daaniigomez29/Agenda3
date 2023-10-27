@@ -19,18 +19,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
 
-        try{
-        String fecha = "20/12/2023";
-            DateTimeFormatter d = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate f = LocalDate.parse(fecha, d);
-            PersonVO p1 = new PersonVO("Manolo", "si", "no", 111, "Sevilla", f);
 
-            PersonRepositoryImpl im = new PersonRepositoryImpl();
-
-            im.editPerson(p1, 2);
-        } catch (ExcepcionPerson e){
-            e.imprimirMensaje();
-        }
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

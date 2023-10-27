@@ -34,8 +34,8 @@ public class MainApp extends Application {
     ConversonPerson p = new ConversonPerson();
     private ObservableList<Person> personData = FXCollections.observableArrayList();
 
-    public MainApp() throws ExcepcionPerson {
-
+    public MainApp(){
+        personData.addAll(addList());
     }
 
     public ArrayList<Person> addList(){
@@ -56,7 +56,6 @@ public class MainApp extends Application {
     }
 
     public ObservableList<Person> getPersonData() {
-        personData.addAll(addList());
         return personData;
     }
 
@@ -110,7 +109,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             PersonOverviewController controller = loader.getController();
             controller.setMainApp(this);
-
+            controller.setAgenda(agenda);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,7 +148,7 @@ public class MainApp extends Application {
             PersonEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
-
+            controller.setAgenda(agenda);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 

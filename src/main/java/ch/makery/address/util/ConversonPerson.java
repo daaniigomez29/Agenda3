@@ -12,6 +12,7 @@ public class ConversonPerson {
 
     public Person convertirPersona(PersonVO personVO){
         Person person = new Person();
+        person.setId(personVO.getCod());
         person.setFirstName(personVO.getFirstName());
         person.setLastName(personVO.getLastName());
         person.setStreet(personVO.getStreet());
@@ -19,6 +20,18 @@ public class ConversonPerson {
         person.setCity(personVO.getCity());
         person.setBirthday(personVO.getBirthday());
         return person;
+    }
+
+    public PersonVO convertirPersonaVO(Person person){
+        PersonVO personVO = new PersonVO();
+        personVO.setCod(person.getId());
+        personVO.setFirstName(person.getFirstName());
+        personVO.setLastName(person.getLastName());
+        personVO.setStreet(person.getStreet());
+        personVO.setPostalCode(person.getPostalCode());
+        personVO.setCity(person.getCity());
+        personVO.setBirthday(person .getBirthday());
+        return personVO;
     }
 
     public ArrayList<Person> convertirLista(ArrayList<PersonVO> listaPersonVO){

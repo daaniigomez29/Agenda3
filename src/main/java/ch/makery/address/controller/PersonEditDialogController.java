@@ -1,13 +1,21 @@
 package ch.makery.address.controller;
 
+import ch.makery.address.model.Agenda;
+import ch.makery.address.model.ExcepcionPerson;
+import ch.makery.address.model.PersonVO;
+import ch.makery.address.util.ConversonPerson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ch.makery.address.model.Person;
 import ch.makery.address.util.DateUtil;
+import org.w3c.dom.Text;
 
 public class PersonEditDialogController {
+    int id;
     @FXML
     private TextField firstNameField;
     @FXML
@@ -20,14 +28,26 @@ public class PersonEditDialogController {
     private TextField cityField;
     @FXML
     private TextField birthdayField;
-
-
+    @FXML
+    ProgressBar pb;
+    @FXML
+    Label porcentaje;
+    Agenda agenda;
+    ConversonPerson conversonPerson;
     private Stage dialogStage;
     private Person person;
     private boolean okClicked = false;
 
     @FXML
     private void initialize() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -53,13 +73,38 @@ public class PersonEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
+            PersonVO personVO = new PersonVO();
+            conversonPerson = new ConversonPerson();
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
             person.setStreet(streetField.getText());
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
+            personVO = conversonPerson.convertirPersonaVO(person);
 
+           if(person.getId() == 0){
+               try {
+                   agenda.crearPersona(personVO);
+                   person.setId(agenda.obtenerUltimoId());
+               } catch (ExcepcionPerson e){
+                   Alert alert = new Alert(Alert.AlertType.ERROR);
+                   alert.setTitle("No creada");
+                   alert.setHeaderText("Persona no creada");
+                   alert.setContentText("Error al crear una persona");
+                   alert.showAndWait();
+               }
+            } else{
+               try {
+                   agenda.editarPersona(personVO);
+               } catch (ExcepcionPerson e){
+                   Alert alert = new Alert(Alert.AlertType.ERROR);
+                   alert.setTitle("No editada");
+                   alert.setHeaderText("Persona no editada");
+                   alert.setContentText("Error al editar una persona");
+                   alert.showAndWait();
+               }
+           }
             okClicked = true;
             dialogStage.close();
         }
@@ -113,5 +158,13 @@ public class PersonEditDialogController {
                     alert.showAndWait();
             return false;
         }
+    }
+
+    public void setPorcentaje(){
+            pb = new ProgressBar(1);
+    }
+
+    public void setAgenda(Agenda agenda){
+        this.agenda = agenda;
     }
 }

@@ -11,6 +11,7 @@ public class Person {
         private final IntegerProperty postalCode;
         private final StringProperty city;
         private final ObjectProperty<LocalDate> birthday;
+        private int id;
 
         /**
          * Default constructor.
@@ -29,7 +30,15 @@ public class Person {
             this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 3, 21));
         }
 
-        public String getFirstName() {
+        public int getId(){
+            return id;
+        }
+
+        public void setId(int id) {
+        this.id = id;
+        }
+
+    public String getFirstName() {
             return firstName.get();
         }
 

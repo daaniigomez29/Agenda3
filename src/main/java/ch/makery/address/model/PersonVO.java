@@ -12,12 +12,18 @@ public class PersonVO {
         private Integer postalCode;
         private String city;
         private LocalDate birthday;
+        private int id;
 
         /**
          * Default constructor.
          */
 
-    public PersonVO(String firstName, String lastName, String street, Integer postalCode, String city, LocalDate birthday) {
+    public PersonVO(){
+
+    }
+
+        public PersonVO(int id, String firstName, String lastName, String street, Integer postalCode, String city, LocalDate birthday) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;

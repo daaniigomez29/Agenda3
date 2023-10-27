@@ -1,6 +1,8 @@
 package ch.makery.address.controller;
 
 import ch.makery.address.MainApp;
+import ch.makery.address.model.Agenda;
+import ch.makery.address.model.ExcepcionPerson;
 import ch.makery.address.model.Person;
 import ch.makery.address.util.DateUtil;
 import javafx.fxml.FXML;
@@ -30,6 +32,7 @@ public class PersonOverviewController {
     @FXML
     Button btnDelete;
     private MainApp mainApp;
+    Agenda agenda;
 
     public  PersonOverviewController(){
     }
@@ -74,9 +77,20 @@ public class PersonOverviewController {
 
     @FXML
     public void deletePerson() {
-        int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-        if(selectedIndex >= 0){
-            personTable.getItems().remove(selectedIndex);
+        Person person;
+        person = personTable.getSelectionModel().getSelectedItem();
+        int index = personTable.getSelectionModel().getSelectedIndex();
+        if(index >= 0){
+            personTable.getItems().remove(index);
+            try{
+                agenda.eliminarPersona(person.getId());
+            } catch (ExcepcionPerson e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("No eliminada");
+                alert.setHeaderText("Persona no eliminada");
+                alert.setContentText("Error al eliminar una persona");
+                alert.showAndWait();
+            }
         } else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Sin seleccionar");
@@ -118,4 +132,7 @@ public class PersonOverviewController {
         }
     }
 
+    public void setAgenda(Agenda agenda) {
+        this.agenda = agenda;
+    }
 }
