@@ -4,6 +4,8 @@ import ch.makery.address.model.Agenda;
 import ch.makery.address.model.ExcepcionPerson;
 import ch.makery.address.model.PersonVO;
 import ch.makery.address.util.ConversonPerson;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -37,6 +39,7 @@ public class PersonEditDialogController {
     private Stage dialogStage;
     private Person person;
     private boolean okClicked = false;
+    private int tamano;
 
     @FXML
     private void initialize() {
@@ -56,7 +59,6 @@ public class PersonEditDialogController {
 
     public void setPerson(Person person) {
         this.person = person;
-
         firstNameField.setText(person.getFirstName());
         lastNameField.setText(person.getLastName());
         streetField.setText(person.getStreet());
@@ -64,6 +66,7 @@ public class PersonEditDialogController {
         cityField.setText(person.getCity());
         birthdayField.setText(DateUtil.format(person.getBirthday()));
         birthdayField.setPromptText("dd.mm.yyyy");
+
     }
 
     public boolean isOkClicked() {
@@ -73,7 +76,6 @@ public class PersonEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            PersonVO personVO = new PersonVO();
             conversonPerson = new ConversonPerson();
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
@@ -81,34 +83,11 @@ public class PersonEditDialogController {
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
-            personVO = conversonPerson.convertirPersonaVO(person);
-
-           if(person.getId() == 0){
-               try {
-                   agenda.crearPersona(personVO);
-                   person.setId(agenda.obtenerUltimoId());
-               } catch (ExcepcionPerson e){
-                   Alert alert = new Alert(Alert.AlertType.ERROR);
-                   alert.setTitle("No creada");
-                   alert.setHeaderText("Persona no creada");
-                   alert.setContentText("Error al crear una persona");
-                   alert.showAndWait();
-               }
-            } else{
-               try {
-                   agenda.editarPersona(personVO);
-               } catch (ExcepcionPerson e){
-                   Alert alert = new Alert(Alert.AlertType.ERROR);
-                   alert.setTitle("No editada");
-                   alert.setHeaderText("Persona no editada");
-                   alert.setContentText("Error al editar una persona");
-                   alert.showAndWait();
-               }
            }
             okClicked = true;
             dialogStage.close();
         }
-    }
+
 
     @FXML
     private void handleCancel() {
@@ -159,12 +138,16 @@ public class PersonEditDialogController {
             return false;
         }
     }
-
-    public void setPorcentaje(){
-            pb = new ProgressBar(1);
-    }
-
     public void setAgenda(Agenda agenda){
         this.agenda = agenda;
     }
+
+    public void setPorcentaje(int tamano){
+        this.tamano = tamano;
+        DoubleProperty progress = new SimpleDoubleProperty();
+        progress.set((double) tamano/50);
+        porcentaje.setText(String.valueOf(tamano) + "/50");
+        pb.setProgress(progress.get());
+    }
+
 }

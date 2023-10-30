@@ -139,7 +139,7 @@ public class MainApp extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Editar persona");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.NONE);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
@@ -149,6 +149,11 @@ public class MainApp extends Application {
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
             controller.setAgenda(agenda);
+            try{
+                controller.setPorcentaje(agenda.listarPersonas().size());
+            } catch (ExcepcionPerson e){
+
+            }
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 

@@ -2,12 +2,14 @@ package ch.makery.address.model;
 
 import ch.makery.address.model.repository.PersonRepository;
 import ch.makery.address.model.repository.impl.PersonRepositoryImpl;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 import java.util.ArrayList;
-
 public class Agenda {
     PersonRepository impl;
-
+    DoubleProperty nLista = new SimpleDoubleProperty();
     public Agenda(){
 
     }
@@ -30,6 +32,18 @@ public class Agenda {
 
     public int obtenerUltimoId() throws ExcepcionPerson {
         return impl.lastId();
+    }
+
+    public int obtenerNPersonas() throws ExcepcionPerson {
+        return impl.obtenerListaPersonas().size();
+    }
+
+    public void incrementarN(){
+
+    }
+
+    public void setProgreso(int tamano){
+
     }
 
     public void setImpl(PersonRepositoryImpl impl) {

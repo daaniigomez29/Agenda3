@@ -4,6 +4,8 @@ import ch.makery.address.MainApp;
 import ch.makery.address.model.Agenda;
 import ch.makery.address.model.ExcepcionPerson;
 import ch.makery.address.model.Person;
+import ch.makery.address.model.PersonVO;
+import ch.makery.address.util.ConversonPerson;
 import ch.makery.address.util.DateUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,7 +35,8 @@ public class PersonOverviewController {
     Button btnDelete;
     private MainApp mainApp;
     Agenda agenda;
-
+    ConversonPerson conversonPerson;
+    PersonVO personVO;
     public  PersonOverviewController(){
     }
 
@@ -101,11 +104,25 @@ public class PersonOverviewController {
     }
 
     @FXML
-    private void handleNewPerson() {
+    private void handleNewPerson() throws ExcepcionPerson {
         Person tempPerson = new Person();
+        conversonPerson = new ConversonPerson();
+        PersonVO personVO = new PersonVO();
+
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
-            mainApp.getPersonData().add(tempPerson);
+            try {
+                personVO = conversonPerson.convertirPersonaVO(tempPerson);
+                agenda.crearPersona(personVO);
+                tempPerson.setId(agenda.obtenerUltimoId());
+                mainApp.getPersonData().add(tempPerson);
+            } catch (ExcepcionPerson e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("No creada");
+                alert.setHeaderText("Persona no creada");
+                alert.setContentText("Error al crear una persona");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -115,11 +132,23 @@ public class PersonOverviewController {
      */
     @FXML
     private void handleEditPerson() {
+        personVO = new PersonVO();
+        conversonPerson = new ConversonPerson();
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
             if (okClicked) {
-                showPersonDetails(selectedPerson);
+                try {
+                    personVO = conversonPerson.convertirPersonaVO(selectedPerson);
+                    agenda.editarPersona(personVO);
+                    showPersonDetails(selectedPerson);
+                } catch (ExcepcionPerson e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("No editada");
+                    alert.setHeaderText("Persona no editada");
+                    alert.setContentText("Error al editar una persona");
+                    alert.showAndWait();
+                }
             }
 
         } else {
@@ -131,6 +160,8 @@ public class PersonOverviewController {
                     alert.showAndWait();
         }
     }
+
+
 
     public void setAgenda(Agenda agenda) {
         this.agenda = agenda;
