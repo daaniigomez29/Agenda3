@@ -7,9 +7,17 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class ConversonPerson {
+
+    //Contructor predeterminado
     public ConversonPerson() {
     }
 
+    /**
+     * Convierte un objeto PersonVO a un objeto Person
+     * @param personVO Persona a convertir
+     * @return objeto Person
+     * @author Daniel Gómez
+     */
     public Person convertirPersona(PersonVO personVO){
         Person person = new Person();
         person.setId(personVO.getCod());
@@ -21,7 +29,12 @@ public class ConversonPerson {
         person.setBirthday(personVO.getBirthday());
         return person;
     }
-
+    /**
+     * Convierte un objeto Person a un objeto PersonVO
+     * @param person Persona a convertir
+     * @return objeto PersonVO
+     * @author Daniel Gómez
+     */
     public PersonVO convertirPersonaVO(Person person){
         PersonVO personVO = new PersonVO();
         personVO.setCod(person.getId());
@@ -34,6 +47,12 @@ public class ConversonPerson {
         return personVO;
     }
 
+    /**
+     * Convierte la lista de objetos PersonVO a una lista de objetos Person
+     * @param listaPersonVO
+     * @return lista de objetos Person
+     * @author Daniel Gómez
+     */
     public ArrayList<Person> convertirLista(ArrayList<PersonVO> listaPersonVO){
         ArrayList<Person> listaPerson = new ArrayList<Person>();
         Person person = new Person();

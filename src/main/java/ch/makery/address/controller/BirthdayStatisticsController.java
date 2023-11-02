@@ -24,8 +24,9 @@ public class BirthdayStatisticsController {
 
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * Inicia la clase del controlador. Este método es llamado automaticamente
+     * Después de que el archivo fxml ha sido cargado.
+     * @author Daniel Gómez
      */
     @FXML
     private void initialize() {
@@ -44,9 +45,9 @@ public class BirthdayStatisticsController {
     }
 
     /**
-     * Sets the persons to show the statistics for.
-     *
-     * @param persons
+     * Selecciona las personas para mostrar las estadísticas.
+     * @param persons Lista de personas
+     * @author Daniel Gómez
      */
     public void setPersonData(List<Person> persons) {
         // Count the number of people having their birthday in a specific month.

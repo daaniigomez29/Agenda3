@@ -29,15 +29,26 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-   private Agenda agenda = new Agenda();
-    private PersonRepositoryImpl impl = new PersonRepositoryImpl();
-    ConversonPerson p = new ConversonPerson();
-    private ObservableList<Person> personData = FXCollections.observableArrayList();
+   private Agenda agenda = new Agenda(); //Instancia de agenda
+    private PersonRepositoryImpl impl = new PersonRepositoryImpl(); //Implementación del repositorio
+    ConversonPerson p = new ConversonPerson(); //Instancia para convertir personas.
+    private ObservableList<Person> personData = FXCollections.observableArrayList(); //Lista que contiene los datos de todas las personas para la Vista
 
+    /**
+     * Añade a la ObervableList todos las personas recogidas del repositorio
+     * @author Daniel Gómez
+     * @version 1.0
+     */
     public MainApp(){
         personData.addAll(addList());
     }
 
+    /**
+     * Transforma la lista de PersonVO recogida del repositorio a una lista de Person para añadirla al ObservableList
+     * @return listaPerson
+     * @author Daniel Gómez
+     * @version 1.0
+     */
     public ArrayList<Person> addList(){
         agenda.setImpl(impl);
         ArrayList<PersonVO>listaPersonVO = new ArrayList<>();
@@ -59,6 +70,12 @@ public class MainApp extends Application {
         return personData;
     }
 
+    /**
+     * Inicia la aplicación
+     * @param primaryStage
+     * @author Daniel Gómez
+     * @version 1.0
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -72,7 +89,9 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initializes the root layout.
+     * Inicia el root layout.
+     * @author Daniel Gómez
+     * @version 1.0
      */
     public void initRootLayout() {
         try {
@@ -94,7 +113,9 @@ public class MainApp extends Application {
 
 
     /**
+     * Muestra la ventana donde se encuentra la lista de personas en en root layout
      * Shows the person overview inside the root layout.
+     * @author Daniel Gómez
      */
     public void showPersonOverview() {
         try {
@@ -117,18 +138,29 @@ public class MainApp extends Application {
 
 
     /**
-     * Returns the main stage.
-     *
-     * @return
+     * Devuelve el main stage.
+     * @return primaryStage
+     * @author Daniel Gómez
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Comienza el programa
+     * @param args
+     * @author Daniel Gómez
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Genera la ventana para editar o crear una persona
+     * @param person Persona editada o creada
+     * @return true/false dependiendo si ha habido exito al crear o editar una persona
+     * @author Daniel Gómez
+     */
     public boolean showPersonEditDialog(Person person) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -164,6 +196,10 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Muestra las estadísticas de los cumpleaños
+     * @author Daniel Gómez
+     */
     public void showBirthdayStatistics() {
         try {
             // Load the fxml file and create a new stage for the popup.

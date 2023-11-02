@@ -42,6 +42,11 @@ public class PersonEditDialogController {
     private int tamano;
     DoubleProperty tam;
 
+    /**
+     * Inicia la clase del controlador. Este método es llamado automaticamente
+     * Después de que el archivo fxml ha sido cargado.
+     * @author Daniel Gómez
+     */
     @FXML
     private void initialize() {
     }
@@ -58,6 +63,11 @@ public class PersonEditDialogController {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * Añade la persona seleccionada a los campos de texto
+     * @param person Objeto Persona
+     * @author Daniel Gómez
+     */
     public void setPerson(Person person) {
         this.person = person;
         firstNameField.setText(person.getFirstName());
@@ -74,6 +84,10 @@ public class PersonEditDialogController {
         return okClicked;
     }
 
+    /**
+     * Añade los datos escritos a la persona
+     * @author Daniel Gómez
+     */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
@@ -95,6 +109,11 @@ public class PersonEditDialogController {
         dialogStage.close();
     }
 
+    /**
+     * Comprueba que los datos escritos sean correctos
+     * @return true/false dependiendo de si la persona ha escrito bien los datos o no
+     * @author Daniel Gómez
+     */
     private boolean isInputValid() {
         String errorMessage = "";
 

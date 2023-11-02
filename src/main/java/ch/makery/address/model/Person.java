@@ -14,12 +14,19 @@ public class Person {
         private int id;
 
         /**
-         * Default constructor.
+         * Constructor predeterminado.
          */
         public Person() {
             this(null, null);
         }
-        public Person(String firstName, String lastName) {
+
+    /**
+     * Constructor con datos.
+     * @param firstName Nombre
+     * @param lastName Apellidos
+     * @author Daniel Gómez
+     */
+    public Person(String firstName, String lastName) {
             this.firstName = new SimpleStringProperty(firstName);
             this.lastName = new SimpleStringProperty(lastName);
 

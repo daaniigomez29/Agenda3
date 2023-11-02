@@ -15,26 +15,31 @@ public class Agenda {
     DoubleProperty nLista = new SimpleDoubleProperty(); //Numero total de personas
     IntegerProperty n = new SimpleIntegerProperty(); //Numero Label porcentaje
 
+    //Contructor predeterminado
     public Agenda(){
 
     }
-
+    //Devuelve la lista de personas obtenidas por el repositorio
     public ArrayList<PersonVO> listarPersonas() throws ExcepcionPerson {
             return impl.obtenerListaPersonas();
     }
 
+    //Crea una persona
     public void crearPersona(PersonVO personVO) throws ExcepcionPerson{
         impl.addPerson(personVO);
     }
 
+    //Edita una persona
     public void editarPersona(PersonVO personVO) throws  ExcepcionPerson {
         impl.editPerson(personVO, personVO.getCod());
     }
 
+    //Elimina una persona
     public void eliminarPersona(int id) throws ExcepcionPerson {
         impl.deletePerson(id);
     }
 
+    //Devuelve el ultimo id de la tabla
     public int obtenerUltimoId() throws ExcepcionPerson {
         return impl.lastId();
     }

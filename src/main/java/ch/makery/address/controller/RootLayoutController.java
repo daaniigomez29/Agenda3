@@ -7,21 +7,19 @@ import javafx.stage.FileChooser;
 import ch.makery.address.MainApp;
 
     /**
-     * The controller for the root layout. The root layout provides the basic
-     * application layout containing a menu bar and space where other JavaFX
-     * elements can be placed.
-     *
-     * @author Marco Jakob
+     * El controlador para el root layout. Root layout proporciona el layout básico de la aplicación,
+     * contiene un menu bar y espacio donde otros elementos de JavaFX pueden ser añadidos.
+     * @author Daniel Gómez
      */
     public class RootLayoutController {
 
-        // Reference to the main application
+        // Referencia a la aplicación principal
         private MainApp mainApp;
 
         /**
-         * Is called by the main application to give a reference back to itself.
-         *
+         * Es llamado por la aplicación principal para dar una referencia a si mismo.
          * @param mainApp
+         * @author Daniel Gómez
          */
         public void setMainApp(MainApp mainApp) {
             this.mainApp = mainApp;

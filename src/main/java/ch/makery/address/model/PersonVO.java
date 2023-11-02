@@ -14,14 +14,25 @@ public class PersonVO {
         private LocalDate birthday;
         private int id;
 
-        /**
-         * Default constructor.
-         */
 
+        /**
+         * Constructor predeterminado.
+         */
     public PersonVO(){
 
     }
 
+    /**
+     * Constructor con datos
+     * @param id id de la persona
+     * @param firstName Nombre
+     * @param lastName Apellidos
+     * @param street Calle
+     * @param postalCode Código postal
+     * @param city Ciudad
+     * @param birthday Cumpleaños
+     * @author Daniel Gómez
+     */
         public PersonVO(int id, String firstName, String lastName, String street, Integer postalCode, String city, LocalDate birthday) {
         this.id = id;
         this.firstName = firstName;
