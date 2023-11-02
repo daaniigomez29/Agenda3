@@ -5,11 +5,16 @@ import ch.makery.address.model.repository.impl.PersonRepositoryImpl;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 import java.util.ArrayList;
 public class Agenda {
     PersonRepository impl;
     DoubleProperty nLista = new SimpleDoubleProperty();
+    DoubleProperty n = new SimpleDoubleProperty();
+
     public Agenda(){
 
     }
@@ -34,16 +39,18 @@ public class Agenda {
         return impl.lastId();
     }
 
-    public int obtenerNPersonas() throws ExcepcionPerson {
-        return impl.obtenerListaPersonas().size();
+    public void incrementarN() throws ExcepcionPerson {
+       double antiguoValor = nLista.get();
+       antiguoValor += 1;
+       nLista.set(antiguoValor);
     }
 
-    public void incrementarN(){
-
-    }
-
-    public void setProgreso(int tamano){
-
+    public void setProgreso(int tamano, ProgressBar pb, Label porcentaje){
+        DoubleProperty tam = new SimpleDoubleProperty(tamano);
+        nLista = new SimpleDoubleProperty();
+        porcentaje.setText(String.valueOf(tam.getValue()) + "/50");
+        pb.progressProperty().bind(nLista);
+        nLista.set((double) tamano/50);
     }
 
     public void setImpl(PersonRepositoryImpl impl) {

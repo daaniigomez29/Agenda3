@@ -40,6 +40,7 @@ public class PersonEditDialogController {
     private Person person;
     private boolean okClicked = false;
     private int tamano;
+    DoubleProperty tam;
 
     @FXML
     private void initialize() {
@@ -76,15 +77,14 @@ public class PersonEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            conversonPerson = new ConversonPerson();
             person.setFirstName(firstNameField.getText());
             person.setLastName(lastNameField.getText());
             person.setStreet(streetField.getText());
             person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
             person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
-           }
             okClicked = true;
+           }
             dialogStage.close();
         }
 
@@ -107,7 +107,7 @@ public class PersonEditDialogController {
             errorMessage += "Calle no válida\n";
         }
 
-        if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0) {
+        if (postalCodeField.getText() == null || postalCodeField.getText().length() == 0 || postalCodeField.getText().length() != 5) {
             errorMessage += "Código postal no válido\n";
         } else {
             try {
@@ -143,11 +143,7 @@ public class PersonEditDialogController {
     }
 
     public void setPorcentaje(int tamano){
-        this.tamano = tamano;
-        DoubleProperty progress = new SimpleDoubleProperty();
-        progress.set((double) tamano/50);
-        porcentaje.setText(String.valueOf(tamano) + "/50");
-        pb.setProgress(progress.get());
+        agenda.setProgreso(tamano,pb, porcentaje);
     }
 
 }

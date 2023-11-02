@@ -112,10 +112,10 @@ public class PersonOverviewController {
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
             try {
+                mainApp.getPersonData().add(tempPerson);
                 personVO = conversonPerson.convertirPersonaVO(tempPerson);
                 agenda.crearPersona(personVO);
                 tempPerson.setId(agenda.obtenerUltimoId());
-                mainApp.getPersonData().add(tempPerson);
             } catch (ExcepcionPerson e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("No creada");
