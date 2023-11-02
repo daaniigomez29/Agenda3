@@ -84,6 +84,7 @@ public class PersonEditDialogController {
             person.setCity(cityField.getText());
             person.setBirthday(DateUtil.parse(birthdayField.getText()));
             okClicked = true;
+            System.out.println("ha pasado");
            }
             dialogStage.close();
         }

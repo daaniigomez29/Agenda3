@@ -107,15 +107,18 @@ public class PersonOverviewController {
     private void handleNewPerson() throws ExcepcionPerson {
         Person tempPerson = new Person();
         conversonPerson = new ConversonPerson();
-        PersonVO personVO = new PersonVO();
+        personVO = new PersonVO();
 
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+        System.out.println("antes del if");
         if (okClicked) {
+            System.out.println("despues del if");
             try {
                 mainApp.getPersonData().add(tempPerson);
                 personVO = conversonPerson.convertirPersonaVO(tempPerson);
                 agenda.crearPersona(personVO);
                 tempPerson.setId(agenda.obtenerUltimoId());
+                agenda.incrementarN();
             } catch (ExcepcionPerson e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("No creada");

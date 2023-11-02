@@ -12,8 +12,8 @@ import javafx.scene.control.ProgressBar;
 import java.util.ArrayList;
 public class Agenda {
     PersonRepository impl;
-    DoubleProperty nLista = new SimpleDoubleProperty();
-    DoubleProperty n = new SimpleDoubleProperty();
+    DoubleProperty nLista = new SimpleDoubleProperty(); //Numero total de personas
+    IntegerProperty n = new SimpleIntegerProperty(); //Numero Label porcentaje
 
     public Agenda(){
 
@@ -43,12 +43,13 @@ public class Agenda {
        double antiguoValor = nLista.get();
        antiguoValor += 1;
        nLista.set(antiguoValor);
+       n.set((int)antiguoValor);
     }
 
     public void setProgreso(int tamano, ProgressBar pb, Label porcentaje){
-        DoubleProperty tam = new SimpleDoubleProperty(tamano);
+        n = new SimpleIntegerProperty(tamano);
         nLista = new SimpleDoubleProperty();
-        porcentaje.setText(String.valueOf(tam.getValue()) + "/50");
+        porcentaje.setText(String.valueOf(n.getValue()) + "/50");
         pb.progressProperty().bind(nLista);
         nLista.set((double) tamano/50);
     }
