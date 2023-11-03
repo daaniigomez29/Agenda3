@@ -2,10 +2,11 @@ package ch.makery.address.controller;
 
 import ch.makery.address.model.Agenda;
 import ch.makery.address.model.ExcepcionPerson;
-import ch.makery.address.model.PersonVO;
 import ch.makery.address.util.ConversonPerson;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ch.makery.address.model.Person;
 import ch.makery.address.util.DateUtil;
-import org.w3c.dom.Text;
 
 public class PersonEditDialogController {
     int id;
@@ -40,7 +40,7 @@ public class PersonEditDialogController {
     private Person person;
     private boolean okClicked = false;
     private int tamano;
-    DoubleProperty tam;
+    IntegerProperty nPerson = new SimpleIntegerProperty();
 
     /**
      * Inicia la clase del controlador. Este método es llamado automaticamente
@@ -70,8 +70,8 @@ public class PersonEditDialogController {
      */
     public void setPerson(Person person) {
         this.person = person;
-        firstNameField.setText(person.getFirstName());
-        lastNameField.setText(person.getLastName());
+        firstNameField.setText("a");
+        lastNameField.setText("a");
         streetField.setText(person.getStreet());
         postalCodeField.setText(Integer.toString(person.getPostalCode()));
         cityField.setText(person.getCity());
@@ -80,6 +80,7 @@ public class PersonEditDialogController {
 
     }
 
+    //Devuelve si se
     public boolean isOkClicked() {
         return okClicked;
     }
@@ -90,16 +91,24 @@ public class PersonEditDialogController {
      */
     @FXML
     private void handleOk() {
-        if (isInputValid()) {
-            person.setFirstName(firstNameField.getText());
-            person.setLastName(lastNameField.getText());
-            person.setStreet(streetField.getText());
-            person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
-            person.setCity(cityField.getText());
-            person.setBirthday(DateUtil.parse(birthdayField.getText()));
-            okClicked = true;
-            System.out.println("ha pasado");
-           }
+        if(nPerson.getValue() < 50) {
+            if (isInputValid()) {
+                person.setFirstName(firstNameField.getText());
+                person.setLastName(lastNameField.getText());
+                person.setStreet(streetField.getText());
+                person.setPostalCode(Integer.parseInt(postalCodeField.getText()));
+                person.setCity(cityField.getText());
+                person.setBirthday(DateUtil.parse(birthdayField.getText()));
+                okClicked = true;
+                System.out.println("ha pasado");
+            }
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Máximo de personas");
+            alert.setHeaderText("Persona no creada");
+            alert.setContentText("Tamaño máximo alcanzado");
+            alert.showAndWait();
+        }
             dialogStage.close();
         }
 
@@ -162,8 +171,28 @@ public class PersonEditDialogController {
         this.agenda = agenda;
     }
 
-    public void setPorcentaje(int tamano){
-        agenda.setProgreso(tamano,pb, porcentaje);
+    public int getnPerson() {
+        return nPerson.get();
     }
 
+    public IntegerProperty nPersonProperty() {
+        return nPerson;
+    }
+
+    public void setnPerson(IntegerProperty nPerson) {
+        this.nPerson = nPerson;
+    }
+
+    public void updateProgress(){
+        nPerson.bind(agenda.nListaProperty());
+        this.pb.setProgress((double) nPerson.getValue()/50);
+        porcentaje.setText(String.valueOf(nPerson.getValue())+"/50");
+        nPerson.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                pb.setProgress((double) nPerson.getValue()/50);
+                porcentaje.setText(String.valueOf(nPerson.getValue())+"/50");
+            }
+        });
+    }
 }

@@ -11,6 +11,10 @@ import ch.makery.address.model.PersonVO;
 import ch.makery.address.model.repository.impl.PersonRepositoryImpl;
 import ch.makery.address.util.ConversonPerson;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +38,7 @@ public class MainApp extends Application {
     ConversonPerson p = new ConversonPerson(); //Instancia para convertir personas.
     private ObservableList<Person> personData = FXCollections.observableArrayList(); //Lista que contiene los datos de todas las personas para la Vista
 
+   IntegerProperty nPersonas = new SimpleIntegerProperty();
     /**
      * Añade a la ObervableList todos las personas recogidas del repositorio
      * @author Daniel Gómez
@@ -55,6 +60,8 @@ public class MainApp extends Application {
         ArrayList<Person>listaPerson = new ArrayList<>();
         try{
             listaPersonVO = agenda.listarPersonas();
+            nPersonas.set(listaPersonVO.size());
+            agenda.setnLista(nPersonas.getValue());
         } catch (ExcepcionPerson e){
           Alert alert = new Alert(Alert.AlertType.INFORMATION);
           alert.setHeaderText("Error");
@@ -181,11 +188,8 @@ public class MainApp extends Application {
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
             controller.setAgenda(agenda);
-            try{
-                controller.setPorcentaje(agenda.listarPersonas().size());
-            } catch (ExcepcionPerson e){
+            controller.updateProgress();
 
-            }
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
@@ -222,5 +226,13 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public IntegerProperty nPersonasProperty() {
+        return nPersonas;
+    }
+
+    public void setnPersonas(int nPersonas) {
+        this.nPersonas.set(nPersonas);
     }
 }

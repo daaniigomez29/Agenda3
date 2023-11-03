@@ -87,6 +87,7 @@ public class PersonOverviewController {
             personTable.getItems().remove(index);
             try{
                 agenda.eliminarPersona(person.getId());
+                agenda.decrementarN();
             } catch (ExcepcionPerson e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("No eliminada");

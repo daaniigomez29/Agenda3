@@ -12,8 +12,7 @@ import javafx.scene.control.ProgressBar;
 import java.util.ArrayList;
 public class Agenda {
     PersonRepository impl;
-    DoubleProperty nLista = new SimpleDoubleProperty(); //Numero total de personas
-    IntegerProperty n = new SimpleIntegerProperty(); //Numero Label porcentaje
+    IntegerProperty nLista = new SimpleIntegerProperty(); //Numero total de personas
 
     //Contructor predeterminado
     public Agenda(){
@@ -44,19 +43,24 @@ public class Agenda {
         return impl.lastId();
     }
 
-    public void incrementarN() throws ExcepcionPerson {
-       double antiguoValor = nLista.get();
-       antiguoValor += 1;
+    public void incrementarN() {
+       int antiguoValor = nLista.get();
+       antiguoValor ++;
        nLista.set(antiguoValor);
-       n.set((int)antiguoValor);
     }
 
-    public void setProgreso(int tamano, ProgressBar pb, Label porcentaje){
-        n = new SimpleIntegerProperty(tamano);
-        nLista = new SimpleDoubleProperty();
-        porcentaje.setText(String.valueOf(n.getValue()) + "/50");
-        pb.progressProperty().bind(nLista);
-        nLista.set((double) tamano/50);
+    public void decrementarN() {
+        int antiguoValor = nLista.get();
+        antiguoValor --;
+        nLista.set(antiguoValor);
+    }
+
+    public IntegerProperty nListaProperty() {
+        return nLista;
+    }
+
+    public void setnLista(int nLista) {
+        this.nLista.set(nLista);
     }
 
     public void setImpl(PersonRepositoryImpl impl) {
