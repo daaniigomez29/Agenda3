@@ -21,9 +21,19 @@ public class PersonRepositoryImpl implements PersonRepository {
     private ArrayList<PersonVO> personas;
     private PersonVO persona;
 
+    /**
+     * Contructor predeterminado
+     * @author Daniel Gómez
+     */
     public PersonRepositoryImpl() {
     }
 
+    /**
+     * Obtiene la lista de personas que existen en la base de datos.
+     * @return Array de personasVO.
+     * @throws ExcepcionPerson Lanza excepción al ocurrir un error en la base de datos.
+     * @author Daniel Gómez
+     */
     public ArrayList<PersonVO> obtenerListaPersonas() throws ExcepcionPerson {
         try {
             Connection conn = this.conexion.conectarBD();
@@ -52,6 +62,13 @@ public class PersonRepositoryImpl implements PersonRepository {
             throw new ExcepcionPerson("No se ha podido realizar la operación");
         }
     }
+
+    /**
+     * Añade una persona a la base de datos.
+     * @param m objeto PersonVO a añadir.
+     * @throws ExcepcionPerson Lanza excepcion si ocurre un error en la base de datos.
+     * @author Daniel Gómez
+     */
     public void addPerson(PersonVO m) throws ExcepcionPerson {
         try {
             Connection conn = this.conexion.conectarBD();
@@ -64,6 +81,13 @@ public class PersonRepositoryImpl implements PersonRepository {
             throw new ExcepcionPerson("No se ha podido realizar la operación");
         }
     }
+
+    /**
+     * Elimina una persona de la base de datos.
+     * @param idPersona id de la persona que va a ser eliminada.
+     * @throws ExcepcionPerson Lanza excepcion si ocurre un error en la base de datos.
+     * @author Daniel Gómez
+     */
     public void deletePerson(Integer idPersona) throws ExcepcionPerson {
         try {
             Connection conn = this.conexion.conectarBD();
@@ -76,6 +100,14 @@ public class PersonRepositoryImpl implements PersonRepository {
             throw new ExcepcionPerson("No se ha podido relaizar la eliminación");
         }
     }
+
+    /**
+     * Edita una persona de la base de datos.
+     * @param personVO Objeto persona que queremos editar.
+     * @param cod Id de la persona que queremos editar.
+     * @throws ExcepcionPerson Lanza excepcion si ocurre un error en la base de datos.
+     * @author Daniel Gómez
+     */
     public void editPerson(PersonVO personVO, Integer cod) throws ExcepcionPerson {
         try {
             Connection conn = this.conexion.conectarBD();
@@ -86,6 +118,13 @@ public class PersonRepositoryImpl implements PersonRepository {
             throw new ExcepcionPerson("No se ha podido realizar la edición");
         }
     }
+
+    /**
+     * Obtiene el último id de la tabla Personas.
+     * @return último id de la tabla.
+     * @throws ExcepcionPerson Lanza excepcion si ocurre un error en la base de datos.
+     * @author Daniel Gómez
+     */
     public int lastId() throws ExcepcionPerson {
         int lastPersonId = 0;
 

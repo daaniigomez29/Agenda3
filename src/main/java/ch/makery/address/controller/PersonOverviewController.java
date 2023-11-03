@@ -37,9 +37,15 @@ public class PersonOverviewController {
     Agenda agenda;
     ConversonPerson conversonPerson;
     PersonVO personVO;
+
+    //Constructor predeterminado
     public  PersonOverviewController(){
     }
 
+    /**
+     * Se ejecuta al inciar el objeto
+     * @author Daniel Gómez
+     */
     @FXML
     private void initialize() {
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
@@ -52,11 +58,21 @@ public class PersonOverviewController {
 
     }
 
+    /**
+     * Obtiene la información de la aplicación principal para obtener la tabla de personas
+     * @param mainApp objeto MainApp
+     * @author Daniel Gómez
+     */
     public void setMainApp(MainApp mainApp){
         this.mainApp = mainApp;
         personTable.setItems(mainApp.getPersonData());
     }
 
+    /**
+     * Obtiene los detalles de la persona seleccionada
+     * @param person
+     * @author Daniel Gómez
+     */
     private void showPersonDetails(Person person) {
         if (person != null) {
             // Fill the labels with info from the person object.
@@ -78,6 +94,10 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Método para borrar una persona, borrandola tanto en la vista como en la base de datos.
+     * @author Daniel Gómez
+     */
     @FXML
     public void deletePerson() {
         Person person;
@@ -104,6 +124,12 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Llamado cuando el usuario hace click en el botón de añadir. Abre una ventana para crear a la persona.
+     * El método añade una persona tanto a la vista como a la base de datos.
+     * @throws ExcepcionPerson Lanza excepción al ocurrir un error en la base de datos.
+     * @author Daniel Gómez
+     */
     @FXML
     private void handleNewPerson() throws ExcepcionPerson {
         Person tempPerson = new Person();
@@ -131,8 +157,10 @@ public class PersonOverviewController {
     }
 
     /**
-     * Called when the user clicks the edit button. Opens a dialog to edit
-     * details for the selected person.
+     * Llamado cuando el usuario hace click en el botón de editar.
+     * Abre una ventana para editar para ver los detalles de la persona seleccionada.
+     * Este método edita a la persona tanto en la vista como en la base de datos.
+     * @author Daniel Gómez
      */
     @FXML
     private void handleEditPerson() {
@@ -166,7 +194,11 @@ public class PersonOverviewController {
     }
 
 
-
+    /**
+     * Añade la agenda
+     * @param agenda agenda de MainApp donde se encuentra la instancia
+     * @author Daniel Gómez
+     */
     public void setAgenda(Agenda agenda) {
         this.agenda = agenda;
     }
